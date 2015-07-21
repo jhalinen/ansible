@@ -1,0 +1,7 @@
+
+[hosted]
+pi_hosted ansible_ssh_host=jh-rasp-1
+
+[rpis]
+jh-rasp-1 ansible_ssh_host=jh-rasp-1
+jh-rasp-2 ansible_ssh_host=jh-rasp-2

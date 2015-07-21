@@ -1,0 +1,25 @@
+# This playbook installs rtl8812au driver required for an example to use 
+# Netgear A6100 dualband Wifi adapter
+
+# Modified from 
+# http://perversecontraptions.com/2015/06/06/how-to-get-a-netgear-a6100-wifi-usb-adapter-to-work-on-a-raspberry-pi/
+
+# Assumptions:
+#: Driver build and available in the working directory. See playbooks
+# fetch_kernel_header_pi.yml
+# build_rtl8812au.yml
+# 
+---
+- name: Install rtl8812au driver for Pi
+  hosts: rpis
+  sudo: True
+  tasks:
+#  - name: Copy rtl8812au driver to all rpis
+#    copy: src=/tmp/8812au.ko dest=/tmp/8812au.ko
+  - name: Copy the driver into /lib/modules
+    copy: src=/tmp/8812au.ko dest=/lib/modules/3.18.11-v7+/kernel/drivers/net/wireless
+    # TODO this should be flowing from git, and use uname -r 
+    # now assumes manual step of copying file from remote rpi where driver has been built
+  - name: Update kernel dependencies
+    command: depmod
+    

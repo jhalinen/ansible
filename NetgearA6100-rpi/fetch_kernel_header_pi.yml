@@ -1,0 +1,37 @@
+# This playbook install linux headers for the current Pi kernel
+
+
+# The process taken from article
+# http://www.embedded.com/electronics-blogs/open-mike/4437876/Getting-Started-with-Embedded-Linux---Part-Nine-Self-hosted-development
+# and from
+# https://github.com/notro/rpi-source/wiki
+---
+- name: Prepare for linux header headers install
+  hosts: pi_hosted
+  sudo: True
+  tasks:
+  - name: Get the rpi-source
+    get_url: url=https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source dest=/usr/bin mode=u+x
+  - name: Install ncurses headers
+    apt: name=libncurses5-dev update-cache=yes cache_valid_time=86400 state=present
+  - name: add jessie source repository to get gcc-4.8
+    apt_repository: repo='deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi' state=present
+#    copy: src=files/jessie-source.conf dest=/etc/apt/sources.list.d/jessie.list
+  - name: Update apt cache
+    apt: update_cache=true
+  - name: Install gcc-4.8
+    apt: name=gcc-4.8 state=present force=true
+  - name: Install g++-4.8
+    apt: name=g++-4.8 state=present force=true
+  - name: Update-alternatives gcc-4.6 priority to 20
+    command: update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 20
+  - name: Update-alternatives gcc-4.8 priority to 50
+    command: update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 50
+  - name: Update-alternatives g++-4.6 priority to 20
+    command: update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.6 20
+  - name: Update-alternatives gcc-4.8 priority to 50
+    command: update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
+  - name: Execute rpi-source
+    command: rpi-source
+  
+  
