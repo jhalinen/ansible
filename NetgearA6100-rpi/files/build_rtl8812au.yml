@@ -19,12 +19,12 @@
   - name: Build the rtl8812au driver
     command: make chdir=/home/pi/rtl8812au-master
     sudo: yes
-#  - name: Preparing to test the driver, unloading old one
-#    command: rmmod 8812au.ko
-#    sudo: yes
+  - name: Preparing to test the driver, unloading old one
+    command: rmmod 8812au.ko
+    sudo: yes
   - name: Test the driver
     command: insmod 8812au.ko chdir=/home/pi/rtl8812au-master
     sudo: yes
   - name: Fetch the driver file to working directory
-    fetch: src=/home/pi/rtl8812au-master/8812au.ko dest=8812au.ko
+    fetch: src=/home/pi/rtl8812au-master/8812au.ko dest=/tmp/8812au.ko
   

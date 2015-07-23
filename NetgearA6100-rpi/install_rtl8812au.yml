@@ -17,7 +17,7 @@
 #  - name: Copy rtl8812au driver to all rpis
 #    copy: src=/tmp/8812au.ko dest=/tmp/8812au.ko
   - name: Copy the driver into /lib/modules
-    copy: src=/tmp/8812au.ko dest=/lib/modules/3.18.11-v7+/kernel/drivers/net/wireless
+    copy: src=8812au.ko dest=/lib/modules/3.18.11-v7+/kernel/drivers/net/wireless
     # TODO this should be flowing from git, and use uname -r 
     # now assumes manual step of copying file from remote rpi where driver has been built
   - name: Update kernel dependencies
