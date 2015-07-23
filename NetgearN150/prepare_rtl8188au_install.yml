@@ -1,0 +1,22 @@
+# This playbook fetches configuration stuff to get the Netgear N150 working
+
+
+# Modified from 
+# http://www.instructables.com/id/Connect-the-Raspberry-Pi-to-the-NetGear-G54N150/
+# and http://blog.sip2serve.com/post/48899893167/rtl8188-access-point-install-script
+#
+
+# Assumptions:
+#: After running the script head to directory /home/pi/ and execute "sudo install-rtl8188cus.sh"
+---
+- name: Fetch script to get Netgear N150 wifi adapter working
+  hosts: pi_hosted
+  sudo: True
+  tasks:
+#  - name: Update apt cache
+#    apt: update_cache=true
+#  - name: Upgrade apt
+#    apt: upgrade=yes
+  - name: Get the script
+    get_url: url=https://dl.dropboxusercontent.com/u/1663660/scripts/install-rtl8188cus.sh dest=/home/pi mode=755
+  
